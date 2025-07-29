@@ -206,10 +206,10 @@ exports.checkDbConnection = async (req, res) => {
 }
 
 //check file system
-exports.checkFS = async (dirPath) =>  {
+exports.checkFS = async () =>  {
     const directoryPath = 'C:\\inetpub\\wwwroot\\detectionStreaming';
   try {
-    const items = fs.readdirSync(dirPath, { withFileTypes: true });
+    const items = fs.readdirSync(directoryPath, { withFileTypes: true });
     const folders = items.filter(item => item.isDirectory());
     return folders.length;
   } catch (err) {
