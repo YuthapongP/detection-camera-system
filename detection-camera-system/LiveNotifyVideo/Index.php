@@ -17,26 +17,45 @@
 </head>
 
 <style>
+
+    #streamContainer {
+        gap: 8px;
+    }
+
+    .video-wrapper {
+        width: 390px;
+        height: 304px;
+        overflow: hidden;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
     #cameraDropdown {
         max-width: 400px;
         max-height: 200px;
         overflow-y: auto;
     }
 
+
     .camera-status {
-        height: 15px;
-        width: 15px;
+        width: 12px;
+        height: 12px;
         border-radius: 50%;
         display: inline-block;
-        margin-left: auto;
+        margin-left: 8px;
     }
 
     .online {
-        background-color: limegreen;
+        background-color: #28a745;
     }
 
     .offline {
-        background-color: red;
+        background-color: #dc3545;
+    }
+
+    .video-wrapper {
+        margin: 10px;
+        position: relative;
     }
 
     .dropdown-custom {
@@ -158,98 +177,39 @@
     </header>
     <!-- Page Content-->
     <section class="p-1 text-center" style="height_: 100vh;">
-        <!-- Dropdown Content -->
+        <!-- Camera Selection -->
         <div class="container text-center mt-3 position-relative">
-            <!-- Added position-relative -->
-            <!-- Button -->
             <button class="btn btn-outline-dark mb-2" type="button" data-bs-toggle="collapse"
-                data-bs-target="#cameraDropdown">
+                data-bs-target="#cameraDropdown" style="min-width: 300px; width: 300px; max-width: 100%;">
                 Select Camera
             </button>
 
-            <!-- Dropdown Content - Now properly centered -->
-            <div id="cameraDropdown" class="dropdown-menu p-3 mx-auto"
+            <div id="cameraDropdown" class="collapse dropdown-menu p-3 mx-auto"
                 style="width: 300px; left: 50%; transform: translateX(-50%);">
-                <!-- Camera Items -->
+
                 <div class="camera-item form-check">
-                    <input class="form-check-input" type="checkbox" id="cam1">
-                    <label class="form-check-label camera-label" for="cam1">Camera 1</label>
-                    <span class="camera-status offline"></span>
+                    <input class="form-check-input" type="checkbox" id="camera-2" data-stream="stream2">
+                    <label class="form-check-label camera-label" for="camera-2">Entrance Camera</label>
+                    <span id="camera-2-status" class="camera-status online"></span>
                 </div>
                 <div class="camera-item form-check">
-                    <input class="form-check-input" type="checkbox" id="cam2" checked>
-                    <label class="form-check-label camera-label" for="cam2">Camera 2</label>
-                    <span class="camera-status online"></span>
+                    <input class="form-check-input" type="checkbox" id="camera-1" data-stream="stream1">
+                    <label class="form-check-label camera-label" for="camera-1">Entrance Camera</label>
+                    <span id="camera-1-status" class="camera-status online"></span>
                 </div>
-                <div class="camera-item form-check">
-                    <input class="form-check-input" type="checkbox" id="cam1">
-                    <label class="form-check-label camera-label" for="cam1">Camera 1</label>
-                    <span class="camera-status offline"></span>
-                </div>
-                <div class="camera-item form-check">
-                    <input class="form-check-input" type="checkbox" id="cam2" checked>
-                    <label class="form-check-label camera-label" for="cam2">Camera 2</label>
-                    <span class="camera-status online"></span>
-                </div>
-                <div class="camera-item form-check">
-                    <input class="form-check-input" type="checkbox" id="cam1">
-                    <label class="form-check-label camera-label" for="cam1">Camera 1</label>
-                    <span class="camera-status offline"></span>
-                </div>
-                <div class="camera-item form-check">
-                    <input class="form-check-input" type="checkbox" id="cam2" checked>
-                    <label class="form-check-label camera-label" for="cam2">Camera 2</label>
-                    <span class="camera-status online"></span>
-                </div>
-                <div class="camera-item form-check">
-                    <input class="form-check-input" type="checkbox" id="cam1">
-                    <label class="form-check-label camera-label" for="cam1">Camera 1</label>
-                    <span class="camera-status offline"></span>
-                </div>
-                <div class="camera-item form-check">
-                    <input class="form-check-input" type="checkbox" id="cam2" checked>
-                    <label class="form-check-label camera-label" for="cam2">Camera 2</label>
-                    <span class="camera-status online"></span>
-                </div>
-                <div class="camera-item form-check">
-                    <input class="form-check-input" type="checkbox" id="cam1">
-                    <label class="form-check-label camera-label" for="cam1">Camera 1</label>
-                    <span class="camera-status offline"></span>
-                </div>
-                <div class="camera-item form-check">
-                    <input class="form-check-input" type="checkbox" id="cam2" checked>
-                    <label class="form-check-label camera-label" for="cam2">Camera 2</label>
-                    <span class="camera-status online"></span>
-                </div>
+
+
+                <!-- Add more unique cameras as needed -->
             </div>
         </div>
 
-        <!-- <div class="container px-lg-5">
-            <div class="p-4 p-lg-5 bg-light streamdiv rounded-3 text-center " style="background-color: #f7f7f7; height: 950px;">
-                <div class="row justify-content-center align-items-center" id="streaming-box">
-                    <div class="p-0">
-                        <iframe allowfullscreen src="../Vdo1/" class="iframe" scrolling="no" frameborder="0"></iframe>
-                    </div>
-
-                    <div class="col-md-12 btn-box pt-3 d-flex align-items-center bottom-bar" style="gap: 1rem;">
-                        <div class="col-md-6 d-flex snap-btn" style="justify-content: flex-end; padding: 3px 0;">
-                        <button type="button" <?php if ($getparam === '') {
-                            echo "style='display: none;'";
-                        } ?> class="btn btn-lg btn-secondary btn-snap" onclick="location.href='<?= $urlimg; ?>'">SNAP SHOT</button>
-                        </div>
-                        <div class="col-md-6 d-flex vdo-btn" style="justify-content: flex-start; padding: 3px 0;">
-                        <button type="button" <?php if ($getparam === '') {
-                            echo "style='display: none;'";
-                        } ?> class="btn btn-lg btn-secondary btn-vdo" onclick="location.href='<?= $urlvdo; ?>'">VDO SNAP</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
-        <div class="text-center" style="width: 150px; height: 100px">
-            <iframe src="https://www.youtube.com/embed/YE7VzlLtp-4" frameborder="0" allowfullscreen>
-            </iframe>
+        <!-- Stream Container -->
+        <div
+  id="streamContainer"
+  class="mt-4 row g-3 container mx-auto overflow-auto"
+  style="max-height: 500px;"
+>
+            <!-- Iframes will appear here dynamically -->
         </div>
     </section>
 
@@ -357,6 +317,194 @@
             });
         });
 
+        const cameras = {
+                1: {
+                    url: 'http://www.centrecities.com:8090/detectionstreamingvdo2/',
+                    name: 'Entrance Camera'
+                },
+                2: {
+                    url: 'https://www.youtube.com/embed/YE7VzlLtp-4',
+                    name: 'Parking Lot'
+                },
+                3: {
+                    url: 'https://www.youtube.com/embed/YE7VzlLtp-4',
+                    name: 'Kitchen'
+                },
+                4: {
+                    url: 'https://www.youtube.com/embed/YE7VzlLtp-4',
+                    name: 'Garden'
+                },
+                5: {
+                    url: 'https://www.youtube.com/embed/YE7VzlLtp-4',
+                    name: 'Garden'
+                },
+                6: {
+                    url: 'https://www.youtube.com/embed/YE7VzlLtp-4',
+                    name: 'Garden'
+                },
+                7: {
+                    url: 'https://www.youtube.com/embed/YE7VzlLtp-4',
+                    name: 'Garden'
+                },
+                8: {
+                    url: 'https://www.youtube.com/embed/YE7VzlLtp-4',
+                    name: 'Garden'
+                },
+            };
+
+
+        document.addEventListener('DOMContentLoaded', async function () {
+         
+            // Checkbox and stream container setup
+            const checkboxes = document.querySelectorAll('.form-check-input');
+
+            const streamContainer = document.getElementById('streamContainer');
+
+            // Stream URLs
+            const streams = {
+                stream1: 'http://www.centrecities.com:8090/detectionstreamingvdo2/',
+                stream2: 'http://www.centrecities.com:8090/detectionstreamingvdo2/',
+                stream3: 'http://www.centrecities.com:8090/detectionstreamingvdo2/',
+                stream4: 'https://www.youtube.com/embed/YE7VzlLtp-4',
+                stream5: 'https://www.youtube.com/embed/YE7VzlLtp-4',
+                stream6: 'https://www.youtube.com/embed/YE7VzlLtp-4',
+                stream7: 'https://www.youtube.com/embed/YE7VzlLtp-4',
+                stream8: 'https://www.youtube.com/embed/YE7VzlLtp-4',
+            };
+
+            // Improved stream checking for YouTube
+            async function isStreamReachable(url) {
+                return new Promise((resolve) => {
+                    const video = document.createElement('video');
+                    video.muted = true;
+                    video.playsInline = true;
+
+                    video.onloadeddata = () => {
+                        video.remove();
+                        resolve(true);
+                    };
+
+                    video.onerror = () => {
+                        video.remove();
+                        resolve(false);
+                    };
+
+                    video.src = url;
+                    video.load();
+                });
+            }
+
+            // Update single camera status
+            async function updateCameraStatus(cameraId, streamUrl) {
+                try {
+                    const isOnline = await isStreamReachable(streamUrl);
+
+                    const statusElement = document.querySelector(`#camera-${cameraId}-status`);
+
+                    if (statusElement) {
+                        statusElement.classList.remove('online', 'offline');
+                        statusElement.classList.add(isOnline ? 'online' : 'online');
+                    }
+                    return isOnline;
+                } catch (error) {
+                    console.error(`Error updating camera ${cameraId}:`, error);
+                    return false;
+                }
+            }
+
+            // Update all camera statuses
+            async function updateAllCameraStatuses() {
+                for (const [cameraId, cameraInfo] of Object.entries(cameras)) {
+                    await updateCameraStatus(cameraId, cameraInfo.url);
+                }
+            }
+
+            // Update streams based on checkbox selection
+            async function updateStreams() {
+                streamContainer.innerHTML = '';
+                const selected = Array.from(checkboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => ({
+                        id: cb.dataset.stream,
+                        name: cb.nextElementSibling.textContent.trim()
+                    }));
+
+                console.log('selected :>> ', selected);
+
+
+                if (selected.length === 0) {
+                    streamContainer.innerHTML = '<p class="text-center w-100">Please select at least one camera</p>';
+                } else {
+                    for (const stream of selected) {
+                        const videoWrapper = document.createElement('div');
+                        videoWrapper.className = 'video-wrapper position-relative';
+                        videoWrapper.style.flex = '0 0 auto';
+
+
+                        Object.entries(cameras).map((item)=> {
+                            console.log(item, 'item')
+                        });
+
+                       
+
+                        const isOnline = await isStreamReachable(streams[stream.id]);
+
+                        videoWrapper.innerHTML = `
+          <div style="position: absolute; top: 0; left: 0; 
+                    background-color: rgba(0,0,0,0.7); color: white; 
+                    padding: 2px 5px; font-size: 12px; z-index: 10;">
+            ${stream.name}
+            <span class="camera-status ${isOnline ? 'online' : 'online'}" 
+                  style="display: inline-block; margin-left: 5px;"></span>
+          </div>
+          <iframe src="${streams[stream.id]}" 
+                width="100%"
+                height="100%"
+                  frameborder="0" 
+                  allowfullscreen
+                    sandbox="allow-scripts allow-same-origin"
+                  style="display: block;"></iframe>`;
+
+                        streamContainer.appendChild(videoWrapper);
+                    }
+                }
+            }
+
+            // Set up event listeners
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateStreams);
+            });
+
+            // Initial setup
+            await updateAllCameraStatuses();
+            setInterval(updateAllCameraStatuses, 30000);
+        });
+
+
+        // Generate dropdown HTML dynamically
+        function renderCameraDropdown() {
+            const dropdown = document.getElementById('cameraDropdown');
+            dropdown.innerHTML = ''; // Clear existing
+
+            Object.entries(cameras).forEach(([id, camera]) => {
+                const cameraItem = document.createElement('div');
+                cameraItem.className = 'camera-item form-check';
+                cameraItem.innerHTML = `
+                    <input class="form-check-input" 
+                        type="checkbox" 
+                        id="camera-${id}" 
+                        data-stream="stream${id}">
+                    <label class="form-check-label camera-label" 
+                        for="camera-${id}">${camera.name}</label>
+                    <span id="camera-${id}-status" 
+                        class="camera-status offline"></span>
+      `;
+                dropdown.appendChild(cameraItem);
+            });
+        }
+
+        // Initialize the dropdown
+        renderCameraDropdown();
 
     </script>
 </body>
@@ -367,5 +515,6 @@
 </footer>
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/scripts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
 </html>

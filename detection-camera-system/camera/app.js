@@ -10,6 +10,9 @@ const { join } = require('node:path')
 const fs = require('fs')
 const zlib = require("zlib")
 
+const sql = require('mssql');
+
+
 // const io = new Server(server, {
 //     cors: { origin: "*" }, // อนุญาตให้ทุกโดเมนเชื่อมต่อ WebSocket
 // });
@@ -24,6 +27,44 @@ app.use(morgan('dev'))
 //     res.send(username)
 // })
 
+const config = {
+    user: 'nwlproduction',
+    password: 'Nwl!2563789!',
+    server: '85.204.247.82',
+    port: 26433,
+    options: {
+        encrypt: true, // สำหรับ Azure SQL
+        trustServerCertificate: true // หากใช้ self-signed cert
+      }
+
+  };
+
+
+
+app.get('/api/data', async (req, res) => {
+    try {
+
+        await sql.connect(config);
+        
+        const result = await sql.query`SELECT 1 AS status`;
+        
+        await sql.close();
+        
+        res.json({ 
+          success: true,
+          message: "Connection successful",
+          databaseStatus: result.recordset[0].status // ได้ค่า 1 แสดงว่าฐานข้อมูลตอบสนองปกติ
+        });
+        
+      } catch (err) {
+     
+        res.status(500).json({ 
+          success: false,
+          error: err.message,
+          details: "Failed to connect to SQL Server"
+        });
+      }
+  });
 
 // const bodyParser = require('body-parser');
 // ใช้ body-parser เพื่อรับข้อมูล JSON จาก POST
@@ -42,6 +83,34 @@ app.get("/dahua-event/", async (req, res) => {
         res.status(500).json({ message: 'Server Error' });
     }
 });
+
+app.get('/check-url', async ()=> {
+
+    
+
+    
+    //check the received urls if it's accessible or not
+    async function checkStream(url) {
+        try {
+          const response = await fetch(url, { method: 'HEAD' });
+      
+          if (response.ok) {
+            console.log('✅ Stream is available:', url);
+            return true;
+          } else {
+            console.warn('⚠️ Stream not available (status):', response.status);
+            return false;
+          }
+        } catch (error) {
+          console.error('❌ Error checking stream:', error);
+          return false;
+        }
+      }
+      
+      
+      checkStream('http://www.centrecities.com:8090/detectionstreamingvdo2/10');
+      
+})
 
 // SQL Server Configuration
 const { exec } = require('child_process');
