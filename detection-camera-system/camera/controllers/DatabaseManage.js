@@ -1,6 +1,12 @@
 const { STRING } = require("txt-file-to-json/src/constants")
 const prisma = require("../Config/prisma")
 
+const fs = require('fs');
+const path = require('path');
+const sql = require('mssql');
+const { configs } = require("../Config/mssql.config");
+
+
 exports.insertFolderNameLogs = async (foldername, FormatDatTime) => {
     try {
         const insertfoldername = await prisma.tmstCameraDetectionLogs.create({
@@ -171,3 +177,45 @@ exports.getDataFlutter = async (req, res) => {
         res.status(500).send("Server Error")
     }
 }
+
+exports.checkDbConnection = async (req, res) => {
+
+    try {
+
+        await sql.connect(configs);
+        
+        const result = await sql.query`SELECT 1 AS status`;
+        
+        await sql.close();
+        
+        res.json({ 
+          success: true,
+          message: "Connection successful",
+          databaseStatus: result.recordset[0].status // ได้ค่า 1 แสดงว่าฐานข้อมูลตอบสนองปกติ
+        });
+        
+      } catch (err) {
+     
+        res.status(500).json({ 
+          success: false,
+          error: err.message,
+          details: "Failed to connect to SQL Server"
+        });
+      }
+
+}
+
+//check file system
+exports.checkFS = async (dirPath) =>  {
+    const directoryPath = 'C:\\inetpub\\wwwroot\\detectionStreaming';
+  try {
+    const items = fs.readdirSync(dirPath, { withFileTypes: true });
+    const folders = items.filter(item => item.isDirectory());
+    return folders.length;
+  } catch (err) {
+    console.error('Error reading directory:', err);
+    return 0;
+  }
+}
+
+

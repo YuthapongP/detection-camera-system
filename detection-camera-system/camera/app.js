@@ -10,8 +10,6 @@ const { join } = require('node:path')
 const fs = require('fs')
 const zlib = require("zlib")
 
-const sql = require('mssql');
-
 
 // const io = new Server(server, {
 //     cors: { origin: "*" }, // อนุญาตให้ทุกโดเมนเชื่อมต่อ WebSocket
@@ -27,17 +25,6 @@ app.use(morgan('dev'))
 //     res.send(username)
 // })
 
-const config = {
-    user: 'nwlproduction',
-    password: 'Nwl!2563789!',
-    server: '85.204.247.82',
-    port: 26433,
-    options: {
-        encrypt: true, // สำหรับ Azure SQL
-        trustServerCertificate: true // หากใช้ self-signed cert
-      }
-
-  };
 
 
 
@@ -84,33 +71,6 @@ app.get("/dahua-event/", async (req, res) => {
     }
 });
 
-app.get('/check-url', async ()=> {
-
-    
-
-    
-    //check the received urls if it's accessible or not
-    async function checkStream(url) {
-        try {
-          const response = await fetch(url, { method: 'HEAD' });
-      
-          if (response.ok) {
-            console.log('✅ Stream is available:', url);
-            return true;
-          } else {
-            console.warn('⚠️ Stream not available (status):', response.status);
-            return false;
-          }
-        } catch (error) {
-          console.error('❌ Error checking stream:', error);
-          return false;
-        }
-      }
-      
-      
-      checkStream('http://www.centrecities.com:8090/detectionstreamingvdo2/10');
-      
-})
 
 // SQL Server Configuration
 const { exec } = require('child_process');

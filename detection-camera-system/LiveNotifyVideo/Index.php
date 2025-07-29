@@ -362,8 +362,8 @@
 
             // Stream URLs
             const streams = {
-                stream1: 'http://www.centrecities.com:8090/detectionstreamingvdo2/',
-                stream2: 'http://www.centrecities.com:8090/detectionstreamingvdo2/',
+                stream1: 'http://www.centrecities.com:8090/detectionstreaming/detectionstreamingvdo1/',
+                stream2: 'http://www.centrecities.com:8090/detectionstreaming/detectionstreamingvdo1/',
                 stream3: 'http://www.centrecities.com:8090/detectionstreamingvdo2/',
                 stream4: 'https://www.youtube.com/embed/YE7VzlLtp-4',
                 stream5: 'https://www.youtube.com/embed/YE7VzlLtp-4',
